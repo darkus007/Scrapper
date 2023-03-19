@@ -1,4 +1,8 @@
 .idea
 .DS_Store
 __pycache__
+scrapper/browser/chromedriver
 venv
+index.html
+*.log
+*.json
