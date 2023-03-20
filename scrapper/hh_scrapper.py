@@ -28,7 +28,7 @@ URL_SUFFIX = "&salary=&area=1&ored_clusters=true&page="
 
 SLEEP_BETWEEN_REQUESTS = 5
 
-HH_SCRAPPER_DEBUG = True  # если True, то собирает данные не полностью (для экономии времени)
+HH_SCRAPPER_DEBUG = True  # если True, то собирает данные НЕ полностью (для экономии времени)
 
 
 class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
@@ -60,16 +60,11 @@ class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
         """
         html = self.selenium_get(url=self.url + '0')
 
-        # with open('index.html', 'w') as file:
-        #     file.write(html)
-        # with open('index.html', 'r') as file:
-        #     html = file.read()
-
         soup = BeautifulSoup(html, 'lxml')
 
         try:
             total_pages = int(soup.find_all('a', class_='bloko-button')[-2].text)  # всего страниц
-        except IndexError:
+        except (IndexError, ValueError):
             total_pages = 0
         try:
             total_vacancies = soup.find('h1', attrs={'data-qa': 'bloko-header-3',
@@ -145,7 +140,12 @@ class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
                 break
 
     def run(self):
+        """ Запускает сбор информации. """
         logger.info('Начало сбора информации.')
         self.__get_general_info()
         self.__get_skills()
         logger.info(f'Конец сбора информации. Получено {len(self.vacancies)} записей.')
+
+    def get_result(self):
+        """ Возвращает результат сбора информации. """
+        return self.vacancies

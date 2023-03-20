@@ -3,6 +3,7 @@
 Реализованы основные метода чтения и записи.
 """
 
+from os import getenv
 from dataclasses import asdict
 
 import pymongo
@@ -26,7 +27,10 @@ class MongoDB(NoSQLBase):
         """
         self.db_name = database
         self.collection_name = collection
-        self.db_client = pymongo.MongoClient(host)
+        self.db_client = pymongo.MongoClient(host=host,
+                                             username=getenv('MONGO_USER', 'root'),
+                                             password=getenv('MONGO_USER_PASSWORD', 'example'),
+                                             )
         self.current_db = self.db_client[self.db_name]
         self.collection = self.current_db[self.collection_name]
 

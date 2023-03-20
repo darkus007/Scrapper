@@ -12,6 +12,9 @@ CHROME_DRIVER_PATH = path.join(CURRENT_PATH, 'browser/chromedriver')
 
 
 class SeleniumMixin:
+    """
+    Добавляет метод selenium_get для получения HTML-страницы с использованием chromedriver.
+    """
     def __init__(self):
         self.__options = webdriver.ChromeOptions()
         # for ChromeDriver version 79.0.3945.16 or over

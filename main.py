@@ -1,3 +1,15 @@
+"""
+Сбор вакансий с сайта HH.ru
+результат сохраняет в базу данных MongoDB.
+
+Команда запуска:
+`python main.py Название вакансии`
+
+Например:
+`python3 main.py Python Django MongoDB`
+
+"""
+
 from os import getenv
 from sys import argv
 
@@ -10,7 +22,7 @@ if __name__ == '__main__':
     if search_phrase and len(search_phrase) > 2:
         scrapper = HHScrapper(search_phrase)
         scrapper.run()
-        vacancies = scrapper.vacancies
+        vacancies = scrapper.get_result()
 
         database = Database(getenv('MONGO_DOCKER'), 'hh_scrapper', 'vacancy')
         database.replace_many(vacancies)

@@ -14,6 +14,9 @@ logging.getLogger('urllib3').setLevel(logging.ERROR)
 
 
 class RequestsMixin:
+    """
+    Добавляет метод requests_get для получения HTML-страницы с использованием библиотеки requests.
+    """
     def __init__(self):
         self.useragent = UserAgent()
 

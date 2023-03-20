@@ -1,9 +1,14 @@
+"""
+Содержит базовый класс для NoSQL баз данных.
+"""
+
 from abc import ABC, abstractmethod
 
 from .data_class import Vacancy
 
 
 class NoSQLBase(ABC):
+    """ Базовый класс для NoSQL баз данных. """
 
     @abstractmethod
     def insert_one(self, data: dict) -> object:
