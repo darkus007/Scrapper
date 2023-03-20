@@ -28,7 +28,7 @@ URL_SUFFIX = "&salary=&area=1&ored_clusters=true&page="
 
 SLEEP_BETWEEN_REQUESTS = 5
 
-HH_SCRAPPER_DEBUG = True  # если True, то собирает данные НЕ полностью (для экономии времени)
+HH_SCRAPPER_DEBUG = False  # если True, то собирает данные НЕ полностью (для экономии времени)
 
 
 class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
