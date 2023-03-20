@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Vacancy:
-    vacancy_id: int            # id вакансии
+    _id: int            # id вакансии
     title: str          # Название вакансии
     price: str          # Предложение по зарплате
     url: str            # Ссылка на вакансию

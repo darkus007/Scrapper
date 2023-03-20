@@ -41,22 +41,22 @@ class MongoDBTestCase(TestCase):
     def test_replace_many(self):
         # Для начала добавляем уникальные данные
         # проверяем, что все данные будут добавлены
-        input_dat1 = [{'vacancy_id': 1, 'param1': 1, 'param2': 1},
-                      {'vacancy_id': 2, 'param1': 2, 'param2': 2},
-                      {'vacancy_id': 3, 'param1': 3, 'param2': 3},
+        input_dat1 = [{'_id': 1, 'param1': 1, 'param2': 1},
+                      {'_id': 2, 'param1': 2, 'param2': 2},
+                      {'_id': 3, 'param1': 3, 'param2': 3},
                       ]
         res = MongoDB(getenv('MONGO_CONNECT'), 'test_db', 'test_coll').replace_many(input_dat1)
         self.assertEqual(res, (0, 3))       # 0 - изменено, 3 - добавлено
 
         # Добавляем данные, которые уже существуют
         # проверяем, что существующие будут обновлены, а новые добавлены
-        input_dat2 = [{'vacancy_id': 1, 'param1': 1, 'param2': 1},
-                      {'vacancy_id': 2, 'param1': 4, 'param2': 2},
-                      {'vacancy_id': 3, 'param1': 3, 'param2': 4},
-                      {'vacancy_id': 4, 'param1': 4, 'param2': 4},
+        input_dat2 = [{'_id': 1, 'param1': 1, 'param2': 1},
+                      {'_id': 2, 'param1': 4, 'param2': 2},
+                      {'_id': 3, 'param1': 3, 'param2': 4},
+                      {'_id': 4, 'param1': 4, 'param2': 4},
                       ]
         res = MongoDB(getenv('MONGO_CONNECT'), 'test_db', 'test_coll').replace_many(input_dat2)
-        self.assertEqual(res, (3, 1))
+        self.assertEqual(res, (2, 1))
 
     def test_drop_collection(self):
         # Создаем коллекцию через добавление записи

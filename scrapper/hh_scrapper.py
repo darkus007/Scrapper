@@ -28,6 +28,8 @@ URL_SUFFIX = "&salary=&area=1&ored_clusters=true&page="
 
 SLEEP_BETWEEN_REQUESTS = 5
 
+HH_SCRAPPER_DEBUG = True  # если True, то собирает данные не полностью (для экономии времени)
+
 
 class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
     def __init__(self, vacancy: str):
@@ -88,7 +90,9 @@ class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
             all_vacancy_on_page = soup.find_all(class_="vacancy-serp-item__layout")
             self.__scrap_general_info(all_vacancy_on_page)
             logger.debug(f'Пройдено {page + 1} страниц(ы) из {total_pages}. Вакансий {len(self.vacancies)}.')
-            break
+
+            if HH_SCRAPPER_DEBUG:  # прерываемся для экономии времени при отладке
+                break
 
     def __scrap_general_info(self, all_vacancy_on_page) -> None:
         """
@@ -107,7 +111,7 @@ class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
             vacancy = Vacancy(
                 title=item.find(class_='serp-item__title').text,
                 url=_url,
-                vacancy_id=int(re.findall(r'\d{4,10}', _url)[0]),
+                _id=int(re.findall(r'\d{4,10}', _url)[0]),
                 # replace(u"\u202F", " ") - заменяем неразрывные пробелы "NNBSP" на обычные
                 price=None if not price_temp else price_temp.text.replace(u"\u202F", " "),
                 date=date
@@ -136,7 +140,9 @@ class HHScrapper(BaseScrapper, SeleniumMixin, RequestsMixin):
             logger.debug(f'[{current_vacancy}|{total_vacancies}]\t{skills}')
             current_vacancy += 1
             sleep(SLEEP_BETWEEN_REQUESTS)
-            break
+
+            if HH_SCRAPPER_DEBUG:  # прерываемся для экономии времени при отладке
+                break
 
     def run(self):
         logger.info('Начало сбора информации.')

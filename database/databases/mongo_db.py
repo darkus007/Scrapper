@@ -52,7 +52,7 @@ class MongoDB(NoSQLBase):
         for d in data:
             if not isinstance(d, dict):
                 d = asdict(d)
-            temp = self.collection.replace_one({'vacancy_id': d['vacancy_id']}, d, upsert=True)
+            temp = self.collection.replace_one({'_id': d['_id']}, d, upsert=True)
             modified_count += temp.modified_count
             if temp.upserted_id:
                 upsert_count += 1
