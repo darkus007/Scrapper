@@ -2,6 +2,7 @@ import json
 from dataclasses import asdict
 
 from scrapper import HHScrapper
+from database import Database
 
 
 if __name__ == '__main__':

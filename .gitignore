@@ -3,6 +3,7 @@
 __pycache__
 scrapper/browser/chromedriver
 venv
+setenv.sh
 index.html
 *.log
 *.json
